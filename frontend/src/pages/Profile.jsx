@@ -43,51 +43,59 @@ export default function Profile() {
     totalLevels > 0 ? (completedLevels.length / totalLevels) * 100 : 0;
 
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-12">
+    <div className="min-h-screen bg-slate-50 px-4 py-8 sm:py-12">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <button
             onClick={() => navigate("/home")}
-            className="mb-4 text-sm text-slate-600 hover:text-slate-900"
+            className="mb-2 sm:mb-4 text-xs sm:text-sm text-slate-600 hover:text-slate-900"
           >
             ← Back to Levels
           </button>
         </div>
 
         {/* Profile Card */}
-        <div className="bg-white rounded-2xl shadow-lg p-8">
+        <div className="bg-white rounded-2xl shadow-lg p-5 sm:p-7 lg:p-8">
           {/* User Info */}
           <div className="mb-8">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-xl sm:text-2xl font-bold">
                 {user.name?.[0]?.toUpperCase() || "U"}
               </div>
-              <div>
-                <h1 className="text-2xl font-extrabold text-slate-900">
+              <div className="min-w-0">
+                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 truncate">
                   {user.name}
                 </h1>
-                <p className="text-slate-600">{user.email}</p>
+                <p className="text-xs sm:text-sm text-slate-600 break-all">
+                  {user.email}
+                </p>
               </div>
             </div>
 
             {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-4 mb-6">
-              <div className="bg-indigo-50 rounded-lg p-4 text-center">
-                <p className="text-xs text-slate-600 mb-1">Total Points</p>
-                <p className="text-2xl font-bold text-indigo-600">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+              <div className="bg-indigo-50 rounded-lg p-3 sm:p-4 text-center">
+                <p className="text-[11px] sm:text-xs text-slate-600 mb-1">
+                  Total Points
+                </p>
+                <p className="text-xl sm:text-2xl font-bold text-indigo-600">
                   {user.totalPoints || 0}
                 </p>
               </div>
-              <div className="bg-emerald-50 rounded-lg p-4 text-center">
-                <p className="text-xs text-slate-600 mb-1">Completed</p>
-                <p className="text-2xl font-bold text-emerald-600">
+              <div className="bg-emerald-50 rounded-lg p-3 sm:p-4 text-center">
+                <p className="text-[11px] sm:text-xs text-slate-600 mb-1">
+                  Completed
+                </p>
+                <p className="text-xl sm:text-2xl font-bold text-emerald-600">
                   {completedLevels.length}
                 </p>
               </div>
-              <div className="bg-orange-50 rounded-lg p-4 text-center">
-                <p className="text-xs text-slate-600 mb-1">Remaining</p>
-                <p className="text-2xl font-bold text-orange-600">
+              <div className="bg-orange-50 rounded-lg p-3 sm:p-4 text-center">
+                <p className="text-[11px] sm:text-xs text-slate-600 mb-1">
+                  Remaining
+                </p>
+                <p className="text-xl sm:text-2xl font-bold text-orange-600">
                   {totalLevels - completedLevels.length}
                 </p>
               </div>
@@ -95,21 +103,21 @@ export default function Profile() {
 
             {/* Progress Bar */}
             <div className="mb-4">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex flex-wrap items-center justify-between gap-1 mb-2">
                 <p className="text-sm font-semibold text-slate-700">
                   Learning Progress
                 </p>
-                <p className="text-sm text-slate-600">
+                <p className="text-xs sm:text-sm text-slate-600">
                   {completedLevels.length} / {totalLevels} levels
                 </p>
               </div>
-              <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-slate-200 rounded-full h-2.5 sm:h-3 overflow-hidden">
                 <div
                   className="bg-gradient-to-r from-indigo-500 to-emerald-500 h-full transition-all duration-500"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
-              <p className="text-xs text-slate-500 mt-1">
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-1">
                 {Math.round(progressPercent)}% complete
               </p>
             </div>
@@ -120,7 +128,7 @@ export default function Profile() {
 
           {/* Completed Levels Section */}
           <div className="mb-8">
-            <h2 className="text-lg font-bold text-slate-900 mb-4">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 mb-4">
               Completed Levels
             </h2>
 
@@ -152,20 +160,20 @@ export default function Profile() {
                     return (
                       <div
                         key={level._id}
-                        className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-4 border border-slate-200"
+                        className="bg-gradient-to-r from-slate-50 to-slate-100 rounded-lg p-3 sm:p-4 border border-slate-200"
                       >
-                        <div className="flex items-start justify-between mb-3 gap-4">
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-slate-900">
+                        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-3 sm:gap-4">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-slate-900 text-sm sm:text-base">
                               Level {level.levelNumber}:{" "}
                               {level.title || "Untitled"}
                             </h3>
-                            <p className="text-xs text-slate-600 mt-1">
+                            <p className="text-xs text-slate-600 mt-1 line-clamp-3">
                               {level.intro}
                             </p>
                           </div>
                           {/* aligned points & score */}
-                          <div className="flex flex-col items-end text-right min-w-[80px]">
+                          <div className="flex flex-row sm:flex-col items-end sm:items-end justify-between sm:justify-start text-right min-w-[80px] gap-1">
                             <p className="text-sm font-bold text-emerald-600 leading-tight">
                               {bestPoints} pts
                             </p>
@@ -177,7 +185,7 @@ export default function Profile() {
 
                         {/* Mini progress bar for this level */}
                         <div className="mb-3">
-                          <div className="w-full bg-slate-300 rounded-full h-2 overflow-hidden">
+                          <div className="w-full bg-slate-300 rounded-full h-1.5 sm:h-2 overflow-hidden">
                             <div
                               className="bg-emerald-500 h-full transition-all duration-300"
                               style={{ width: `${scorePercent}%` }}
@@ -187,7 +195,7 @@ export default function Profile() {
 
                         <button
                           onClick={() => navigate(`/levels/${level._id}`)}
-                          className="text-xs text-indigo-600 hover:text-indigo-700 font-semibold"
+                          className="text-xs sm:text-sm text-indigo-600 hover:text-indigo-700 font-semibold"
                         >
                           Retake Quiz →
                         </button>
@@ -201,24 +209,26 @@ export default function Profile() {
           {/* Divider */}
           <div className="border-t my-6" />
 
-          {/* Logout Button (slightly smaller than before) */}
-          <button
-            onClick={() => {
-              logout();
-              navigate("/");
-            }}
-            className="mx-auto flex items-center gap-3 
-             px-6 py-3 rounded-2xl 
-             bg-gradient-to-br from-red-500 to-rose-600 
-             border border-red-400/60 
-             shadow-lg shadow-red-500/30 
-             text-white font-semibold 
-             hover:scale-[1.05] hover:shadow-xl hover:shadow-red-500/40 
-             active:scale-95 transition-all duration-200"
-          >
-            <i className="fa-solid fa-right-from-bracket text-white text-lg drop-shadow"></i>
-            <span className="tracking-wide">Logout</span>
-          </button>
+          {/* Logout Button */}
+          <div className="flex">
+            <button
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+              className="mx-auto w-full sm:w-auto flex items-center justify-center gap-3 
+               px-5 sm:px-6 py-3 rounded-2xl 
+               bg-gradient-to-br from-red-500 to-rose-600 
+               border border-red-400/60 
+               shadow-lg shadow-red-500/30 
+               text-white text-sm sm:text-base font-semibold 
+               hover:scale-[1.03] hover:shadow-xl hover:shadow-red-500/40 
+               active:scale-95 transition-all duration-200"
+            >
+              <i className="fa-solid fa-right-from-bracket text-white text-lg drop-shadow" />
+              <span className="tracking-wide">Logout</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
