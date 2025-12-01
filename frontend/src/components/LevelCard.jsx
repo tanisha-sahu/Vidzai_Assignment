@@ -4,7 +4,6 @@ import React from "react";
 export default function LevelCard({ levelNumber, title, description, status }) {
   const isLocked = status === "locked";
 
-  // Status config for label, colors and icon
   const getStatusConfig = (state) => {
     switch (state) {
       case "completed":

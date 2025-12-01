@@ -1,4 +1,3 @@
-  // src/pages/Quiz.jsx
 import React from "react";
 export default function Quiz() {
   return (

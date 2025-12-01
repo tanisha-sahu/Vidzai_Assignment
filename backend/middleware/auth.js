@@ -1,4 +1,3 @@
-// middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
@@ -22,7 +21,6 @@ module.exports = async function authMiddleware(req, res, next) {
       return res.status(401).json({ message: "User not found" });
     }
 
-    // attach to req
     req.user = { id: user._id.toString() };
     next();
   } catch (err) {

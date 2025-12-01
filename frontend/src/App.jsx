@@ -15,27 +15,14 @@ import { useAuth } from "./context/AuthContext";
 import { toast } from "react-toastify";
 import api from "./api";
 
-/**
- * Simple auth-only wrapper
- */
 function PrivateRoute({ children }) {
   const { user, authLoading } = useAuth();
 
-  // Wait until we know if user is logged in or not
-  if (authLoading) return null; // you can render a loader here if you want
+  if (authLoading) return null; 
 
   return user ? children : <Navigate to="/login" replace />;
 }
 
-/**
- * Protects routes for a specific level id:
- * - Redirects to /login if not authenticated
- * - Redirects to /home (with toast) if level is locked for the user
- *
- * Here we assume:
- *   user.completedLevels = array of levelNumbers (e.g. [1, 2, 3]) OR similar
- */
-// inside src/App.jsx
 function ProtectedLevelRoute({ children }) {
   const { user, authLoading } = useAuth();
   const { id } = useParams();
@@ -45,17 +32,14 @@ function ProtectedLevelRoute({ children }) {
 
   React.useEffect(() => {
     const checkAccess = async () => {
-      // Wait for auth to finish first
       if (authLoading) return;
 
-      // If no user after auth finished, go to login
       if (!user) {
         navigate("/login", { replace: true });
         return;
       }
 
       try {
-        // fetch level to get levelNumber
         const res = await api.get(`/levels/${id}`);
         const level = res.data.level || res.data;
         const ln = level.levelNumber;
@@ -87,7 +71,6 @@ function ProtectedLevelRoute({ children }) {
     checkAccess();
   }, [user, id, navigate, authLoading]);
 
-  // While auth or level check is in progress, render nothing (or loader)
   if (authLoading || loading) return null;
 
   return children;

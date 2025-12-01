@@ -11,10 +11,10 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [authLoading, setAuthLoading] = useState(true); // <-- loading flag
+  const [authLoading, setAuthLoading] = useState(true); 
   const navigate = useNavigate();
 
-  // on mount, try to fetch profile if token exists
+
   useEffect(() => {
     const init = async () => {
       setAuthLoading(true);
@@ -43,13 +43,11 @@ export function AuthProvider({ children }) {
       const { token } = res.data;
       localStorage.setItem("token", token);
 
-      // immediately fetch full profile
       try {
         const profileRes = await api.get("/profile");
         setUser(profileRes.data.user);
       } catch (err) {
         console.error("Failed to fetch full profile after login", err);
-        // still proceed with minimal info if needed
         setUser(res.data.user || null);
       }
 
@@ -68,7 +66,6 @@ export function AuthProvider({ children }) {
       const { token } = res.data;
       localStorage.setItem("token", token);
 
-      // immediately fetch full profile
       try {
         const profileRes = await api.get("/profile");
         setUser(profileRes.data.user);

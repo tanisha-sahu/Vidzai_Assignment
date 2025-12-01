@@ -15,9 +15,7 @@ export default function Signup() {
     setLoading(true);
     try {
       await signup({ name, email, password });
-      // auto-login handled in context
     } catch (err) {
-      // handled in context
     } finally {
       setLoading(false);
     }

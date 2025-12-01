@@ -1,4 +1,3 @@
-// routes/quizRoutes.js
 const express = require("express");
 const router = express.Router();
 const Quiz = require("../models/Quiz");
@@ -6,7 +5,6 @@ const User = require("../models/User");
 const Level = require("../models/Level");
 const auth = require("../middleware/auth");
 
-// Seed default quizzes if not exist
 async function ensureSeedQuizzes() {
   const count = await Quiz.countDocuments();
   if (count > 0) return;
@@ -77,7 +75,6 @@ router.get("/levels/:levelNumber/quiz", auth, async (req, res) => {
 
     if (!quiz) return res.status(404).json({ message: "Quiz not found" });
 
-    // Don't send correctIndex to frontend
     const safeQuestions = quiz.questions.map((q) => ({
       id: q._id,
       question: q.question,
@@ -92,7 +89,6 @@ router.get("/levels/:levelNumber/quiz", auth, async (req, res) => {
 });
 
 // POST /api/quiz/submit
-// { levelNumber, answers: [index, index, ...] }
 router.post("/quiz/submit", auth, async (req, res) => {
   try {
     const { levelNumber, answers } = req.body;

@@ -1,4 +1,3 @@
-// server.js
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
@@ -11,10 +10,8 @@ const userRoutes = require("./routes/userRoutes");
 
 const app = express();
 
-// connect DB
 connectDB();
 
-// middleware
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
@@ -23,7 +20,6 @@ app.use(
 );
 app.use(express.json());
 
-// routes
 app.use("/api/auth", authRoutes);
 app.use("/api/levels", levelRoutes);
 app.use("/api", quizRoutes);

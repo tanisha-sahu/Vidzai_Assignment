@@ -1,4 +1,3 @@
-// models/User.js
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
@@ -8,13 +7,12 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
 
     totalPoints: { type: Number, default: 0 },
-
-    // store completed levelNumbers, e.g. [1, 2, 3]
+    
     completedLevels: {
       type: [Number],
       default: [],
     },
-    // track best score per level: [{ levelNumber: 1, bestScore: 3 }]
+
     levelScores: {
       type: [
         {

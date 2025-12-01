@@ -1,4 +1,3 @@
-// src/pages/LevelDetail.jsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../api";
@@ -73,7 +72,7 @@ export default function LevelDetail() {
 return (
   <div className="min-h-screen w-full bg-gradient-to-b from-slate-50 to-slate-100">
 
-    {/* ✅ Proper top spacing + aligned back button */}
+    {/*  Proper top spacing + aligned back button */}
     <div className="w-full max-w-5xl mx-auto px-4 pt-6">
       <button
         onClick={() => navigate("/home")}
@@ -84,7 +83,7 @@ return (
       </button>
     </div>
 
-    {/* ✅ Content section */}
+    {/*  Content section */}
     <div className="w-full px-4 py-6 md:py-10">
       <article className="w-full md:max-w-5xl md:mx-auto md:bg-white md:border md:rounded-2xl md:shadow-lg overflow-hidden">
         <div className="md:h-1 md:bg-gradient-to-r md:from-indigo-500 md:via-sky-500 md:to-emerald-400" />

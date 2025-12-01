@@ -15,7 +15,7 @@ export default function Navbar() {
   return (
     <nav className="bg-white/80 backdrop-blur border-b sticky top-0 z-50">
       <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-        {/* ✅ Logo */}
+        {/*  Logo */}
         <Link
           to="/"
           className="font-extrabold text-xl tracking-wide bg-gradient-to-r from-indigo-600 to-sky-500 bg-clip-text text-transparent"
@@ -23,7 +23,7 @@ export default function Navbar() {
           AI Learn
         </Link>
 
-        {/* ✅ Right Side */}
+        {/* Right Side */}
         <div className="flex items-center gap-5">
           {user ? (
             <>
@@ -37,8 +37,7 @@ export default function Navbar() {
                 Home
               </Link>
 
-              {/* ✅ Dummy Profile Icon (NO background, NO letter) */}
-              {/* ✅ Premium Dummy Profile Icon */}
+              {/*  Dummy Profile Icon */}
               <Link
                 to="/profile"
                 title="Profile"
@@ -61,7 +60,7 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              {/* ✅ Login */}
+              {/* Login */}
               <Link
                 to="/login"
                 className={`text-sm font-medium transition hover:text-indigo-600 ${isActive(
@@ -71,7 +70,7 @@ export default function Navbar() {
                 Login
               </Link>
 
-              {/* ✅ Stylish Sign Up Button */}
+              {/* Stylish Sign Up Button */}
               <Link
                 to="/signup"
                 className="text-sm font-semibold px-4 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 to-sky-500 text-white shadow hover:shadow-lg active:scale-95 transition"

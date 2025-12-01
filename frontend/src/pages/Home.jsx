@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import React, { useEffect, useState } from "react";
 import api from "../api";
 import { toast } from "react-toastify";
@@ -122,7 +121,7 @@ export default function Home() {
                       {title}
                     </h3>
 
-                    {/* ✅ UPDATED STATUS STYLE ONLY */}
+                    {/*  UPDATED STATUS STYLE ONLY */}
                     <div
                       className={`text-[11px] font-semibold px-3 py-1 rounded-full border ${
                         isLocked

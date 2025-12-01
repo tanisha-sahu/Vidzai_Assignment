@@ -1,4 +1,3 @@
-// models/Quiz.js
 const mongoose = require("mongoose");
 
 const quizQuestionSchema = new mongoose.Schema({

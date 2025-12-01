@@ -1,4 +1,3 @@
-// routes/levels.routes.js
 const express = require("express");
 const router = express.Router();
 const Level = require("../models/Level");
@@ -31,7 +30,7 @@ router.get("/:id", async (req, res) => {
 });
 
 
-// GET /levels/:id/quiz -> return quiz questions (without correctIndex)
+// GET /levels/:id/quiz -> return quiz questions
 router.get("/:id/quiz", async (req, res) => {
   try {
     const level = await Level.findById(req.params.id).lean();
@@ -53,7 +52,7 @@ router.get("/:id/quiz", async (req, res) => {
 // POST /levels/:id/quiz/submit -> accept answers, score them, unlock next level if passed
 router.post("/:id/quiz/submit", auth, async (req, res) => {
   try {
-    const { answers } = req.body; // answers: array of selected indexes (number) for each question
+    const { answers } = req.body;
     const level = await Level.findById(req.params.id);
     if (!level) return res.status(404).json({ message: "Level not found" });
 
@@ -64,7 +63,6 @@ router.post("/:id/quiz/submit", auth, async (req, res) => {
       return res.status(400).json({ message: "Answers array invalid or incomplete" });
     }
 
-    // Score calculation
     let score = 0;
     const correctAnswers = [];
 
@@ -76,20 +74,16 @@ router.post("/:id/quiz/submit", auth, async (req, res) => {
       correctAnswers.push(Number(q.correctIndex));
     }
 
-    // pass threshold: 60% (can change). Here total 5 -> pass if >=3
     const passThreshold = Math.ceil(total * 0.6);
     const passed = score >= passThreshold;
 
     let pointsAwarded = 0;
     let unlockNextLevel = false;
 
-    // Points per correct answer
     const pointsPerQuestion = 10;
 
-    // Load user to update levelScores and totalPoints
     const user = await User.findById(req.user.id);
 
-    // Find existing best score entry for this level
     let existingEntry = null;
     if (user && Array.isArray(user.levelScores)) {
       existingEntry = user.levelScores.find((e) => e.levelNumber === level.levelNumber);
@@ -97,21 +91,17 @@ router.post("/:id/quiz/submit", auth, async (req, res) => {
     const existingBestScore = existingEntry ? existingEntry.bestScore : null;
     const existingBestPoints = existingBestScore !== null ? existingBestScore * pointsPerQuestion : 0;
 
-    // Update best score if this attempt is better
     let newBestScore = existingBestScore === null ? score : Math.max(existingBestScore, score);
 
-    // If user exists, update their levelScores and award delta points only when passing
     if (user) {
       if (existingEntry) {
         if (score > existingEntry.bestScore) {
           existingEntry.bestScore = newBestScore;
         }
       } else {
-        // create new entry
         user.levelScores.push({ levelNumber: level.levelNumber, bestScore: newBestScore });
       }
 
-      // If passed, award points based on improvement over previous best
       if (passed) {
         const newBestPoints = newBestScore * pointsPerQuestion;
         const delta = newBestPoints - existingBestPoints;
@@ -120,7 +110,6 @@ router.post("/:id/quiz/submit", auth, async (req, res) => {
           pointsAwarded = delta;
         }
 
-        // ensure completedLevels contains this levelNumber
         if (!user.completedLevels.includes(level.levelNumber)) {
           user.completedLevels.push(level.levelNumber);
         }
@@ -129,13 +118,10 @@ router.post("/:id/quiz/submit", auth, async (req, res) => {
       await user.save();
     }
 
-    // If passed: mark level completed and unlock next level
     if (passed) {
-      // mark current level as completed
       level.status = "completed";
       await level.save();
 
-      // unlock next level by levelNumber
       const nextLevel = await Level.findOne({ levelNumber: level.levelNumber + 1 });
       if (nextLevel) {
         nextLevel.status = "unlocked";
@@ -144,7 +130,6 @@ router.post("/:id/quiz/submit", auth, async (req, res) => {
       }
     }
 
-    // Determine user's current best for this level to return
     const returnedBestScore = user
       ? (user.levelScores.find((e) => e.levelNumber === level.levelNumber) || {}).bestScore || 0
       : existingBestScore || 0;
@@ -153,7 +138,7 @@ router.post("/:id/quiz/submit", auth, async (req, res) => {
       score,
       total,
       passed,
-      correctAnswers, // useful to show correct option later
+      correctAnswers, 
       pointsAwarded,
       unlockNextLevel,
       bestScore: returnedBestScore,
